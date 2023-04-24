@@ -1,0 +1,22 @@
+{
+    "enabled": true,
+    "export-targets": {"add": [
+        {
+            "client-auth": {
+                "basic": {
+                    "username": "<USERNAME>",
+                    "password": "<PASSWORD>"
+                }
+            },
+            "enabled": true,
+            "server-auth": {
+                "ca-public-key": {
+                    "type": "PEM-X509",
+                    "value": "<CERTIFICATE>"
+                }
+            },
+            "type": "prometheus-remote-write",
+            "url": "https://<EXTERNAL_PROMETHEUS_IP_ADDRESS>:9090/api/v1/write"
+        }
+    ]}
+}

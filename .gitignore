@@ -1,0 +1,3 @@
+# Ignore user customized .env and docker-compose.yml #
+.env
+docker-compose.yml

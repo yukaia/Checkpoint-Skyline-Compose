@@ -1,0 +1,51 @@
+version: '3.8'
+
+volumes:
+  prometheus-data:
+  grafana-data:
+
+services:
+
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--enable-feature=memory-snapshot-on-shutdown'
+      #setting to adjust the data retention, d designates days, h designates hours. 
+      - '--storage.tsdb.retention.time=${PROMETHEUS_RETENTION}'
+      #setting to adjust the maximum disk usage.
+      - '--storage.tsdb.retention.size=${PROMETHEUS_SIZE}'
+      - '--web.enable-lifecycle'
+      - '--web.enable-remote-write-receiver'
+    restart: always
+    ports:
+      - 9090:9090
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana
+    user: '1000'
+    volumes:
+      - grafana-data:/var/lib/grafana
+      # Currently have the dashboard provisioning disabled, there's a problem with a variable used to set the datasource used for the dashboards. The variable isn't being properly mapped to the prometheus datasource, you have to manually edit each dashboard and update the variables (settings>variables) to reference the default prometheus datasource. When you import a dashboard it does the mapping as part of the process.
+      #- ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+    depends_on:
+      - prometheus
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=${ANONYMOUS_AUTH}
+      #- GF_DEFAULT_INSTANCE_NAME=${INSTANCE_NAME}
+      #- GF_AUTH_ANONYMOUS_ORG_NAME=${ANON_ORG}
+      #- GF_AUTH_ANONYMOUS_ORG_ROLE=${ANON_ROLE}
+      #- GF_SECURITY_ADMIN_USER={ADMIN_USER}
+      #- GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASS}
+    restart: always
+    ports:
+      - 3000:3000
