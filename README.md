@@ -14,13 +14,13 @@ You may need to start the docker service after installing it. You can enable and
 
 Start off with cloning this repo, I like to throw my projects in `/opt`, but you're welcome to clone this wherever you'd like. `git clone https://github.com/yukaia/Checkpoint-Skyline-Compose.git`. 
 
-Rename `.env-sample` to `.env` `cp .env-sample .env` After doing that begin with editing the `.env` file using your editor of choice.
+Rename `.env-sample` to `.env` via `cp .env-sample .env` After doing that begin with editing the `.env` file using your editor of choice.
 
 ### Prometheus Settings
 
 ----
 
-`PROMETHEUS_RETENTION` is the variable used to set the maximum age of records in the database, you can use `h` for hours and `d` for days. According to Checkpoint you can expect 15 days of Skyline Data per device is about 25MB. 
+`PROMETHEUS_RETENTION` is the variable used to set the maximum age of records in the database, you can use `h` for hours and `d` for days. According to Checkpoint 15 days of Skyline Data per device is about 25MB. 
 
 `PROMETHEUS_SIZE` is the variable used to set the maximum disk spaced used by Prometheus before it starts to delete data. Whichever of these two values is reached first is the one that takes effect.
 
@@ -126,7 +126,7 @@ I have documented that process in the [checkpoint](./checkpoint/README.md) direc
 
 ## Further documentation/reading on Skyline and Grafana alerting
 
-Finally if you want to do more reading on the metrics available through skyline you can find that information in this [Skyline Metrics Repository PFD](https://downloads.checkpoint.com/fileserver/SOURCE/direct/ID/122467/FILE/CP_Skyline_Metrics_Repository.pdf)
+Finally if you want to do more reading on the metrics available through skyline you can find that information in this [Skyline Metrics Repository PDF](https://downloads.checkpoint.com/fileserver/SOURCE/direct/ID/122467/FILE/CP_Skyline_Metrics_Repository.pdf)
 
 Checkpoint has an SK on configuring alerting in Grafana, you can find it at [sk180630](https://supportcenter.us.checkpoint.com/supportcenter/portal?eventSubmit_doGoviewsolutiondetails=&solutionid=sk180630) and Grafana's documentation on alerting can be found [here](https://grafana.com/docs/grafana/latest/alerting/)
 
