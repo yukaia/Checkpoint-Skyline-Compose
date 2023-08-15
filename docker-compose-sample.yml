@@ -7,7 +7,7 @@ volumes:
 services:
 
   prometheus:
-    container_name: prometheus
+    container_name: prometheus-skyline
     image: prom/prometheus:latest
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
@@ -29,7 +29,7 @@ services:
       - 9090:9090
 
   grafana:
-    container_name: grafana
+    container_name: grafana-skyline
     image: grafana/grafana
     user: '1000'
     volumes:
