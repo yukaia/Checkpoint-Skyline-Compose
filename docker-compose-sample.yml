@@ -1,8 +1,8 @@
 version: '3.8'
 
 volumes:
-  prometheus-data:
-  grafana-data:
+  prometheus-skyline-data:
+  grafana-skyline-data:
 
 services:
 
@@ -11,7 +11,7 @@ services:
     image: prom/prometheus:latest
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-      - prometheus-data:/prometheus
+      - prometheus-skyline-data:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
@@ -33,7 +33,7 @@ services:
     image: grafana/grafana
     user: '1000'
     volumes:
-      - grafana-data:/var/lib/grafana
+      - grafana-skyline-data:/var/lib/grafana
       # Currently have the dashboard provisioning disabled, there's a problem with a variable used to set the datasource used for the dashboards. The variable isn't being properly mapped to the prometheus datasource, you have to manually edit each dashboard and update the variables (settings>variables) to reference the default prometheus datasource. When you import a dashboard it does the mapping as part of the process.
       #- ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
       - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
